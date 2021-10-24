@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject breadItem;
     public GameObject bolognaItem;
     public GameObject mayoItem;
+    public GameObject eggItem;
+    public GameObject milkItem;
     public GameObject listButton;
     public GameObject pauseButton;
     public GameObject listScreen;
@@ -122,6 +124,17 @@ public class GameManager : MonoBehaviour
                 OpenList(true);
                 RotateSpeedTiles(new Vector2(-16, 173), new Vector2(-16, 231));
                 RotateSpeedTiles(new Vector2(-16, 172), new Vector2(38, 172));
+                break;
+            case "eggs":
+                eggItem.SetActive(false);
+                FindItem(3);
+                OpenList(true);
+                break;
+            case "milk":
+                milkItem.SetActive(false);
+                FindItem(4);
+                OpenList(true);
+                RotateSpeedTiles(new Vector2(56, 181), new Vector2(66, 231));
                 break;
         }
     }
