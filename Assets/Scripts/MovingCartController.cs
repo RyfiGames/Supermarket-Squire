@@ -11,6 +11,14 @@ public class MovingCartController : MonoBehaviour
     public Transform point1;
     public Transform point2;
 
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] sprites;
+
+    void Start()
+    {
+        spriteRenderer.sprite = sprites[Random.Range(0, sprites.Length)];
+    }
+
     // Update is called once per frame
     void Update()
     {

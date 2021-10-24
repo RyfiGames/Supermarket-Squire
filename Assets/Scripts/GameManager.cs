@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject listItem;
     public GameObject breadItem;
     public GameObject bolognaItem;
+    public GameObject mayoItem;
     public GameObject listButton;
     public GameObject pauseButton;
     public GameObject listScreen;
@@ -114,6 +115,13 @@ public class GameManager : MonoBehaviour
                 FindItem(1);
                 OpenList(true);
                 RotateSpeedTiles(new Vector2(48, 60), new Vector2(92, 87));
+                break;
+            case "mayo":
+                mayoItem.SetActive(false);
+                FindItem(2);
+                OpenList(true);
+                RotateSpeedTiles(new Vector2(-16, 173), new Vector2(-16, 231));
+                RotateSpeedTiles(new Vector2(-16, 172), new Vector2(38, 172));
                 break;
         }
     }
