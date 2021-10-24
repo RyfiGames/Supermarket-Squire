@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Speed Tile Left
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: 38aa28bf2d3d9e246bf299b9e47e5a76, type: 3}
+  - {fileID: 21300000, guid: 22b15a740d657564e881ef0300f7299d, type: 3}
+  - {fileID: 21300000, guid: 029ec29048772a44fb55af66ad9c0ee3, type: 3}
+  - {fileID: 21300000, guid: 2c328ddf893a0ee4ba4bccb77ec0b393, type: 3}
+  - {fileID: 21300000, guid: f5eb8845cf81ee74db5ce4e0ace7f3e0, type: 3}
+  - {fileID: 21300000, guid: 6e4789d82e3ca454295d4cef0b646d96, type: 3}
+  - {fileID: 21300000, guid: fba0d464a70bb0d4ca903231b0b1fa53, type: 3}
+  - {fileID: 21300000, guid: c15a06c8e7931c544bf20e7b57289ea7, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 2

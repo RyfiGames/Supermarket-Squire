@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Speed Tile Up
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: 37151763931e12b44b79af1e5231b500, type: 3}
+  - {fileID: 21300000, guid: cd3deb83bf63a8b45bfc79fdbf06a0ac, type: 3}
+  - {fileID: 21300000, guid: e3020f6c320558c48b9a6a165ae9a5a7, type: 3}
+  - {fileID: 21300000, guid: d9d3a4216b1e5d74096e38f33f7cf85c, type: 3}
+  - {fileID: 21300000, guid: ad170f412dc45024fba45179cba31ccc, type: 3}
+  - {fileID: 21300000, guid: f81582d2fe276c34bb9660ee1d7276c4, type: 3}
+  - {fileID: 21300000, guid: b02c354c6e7d0044dbd251d000bf2a5a, type: 3}
+  - {fileID: 21300000, guid: 9d72e66ddb459eb498cb0fbe1b6787e2, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 2
