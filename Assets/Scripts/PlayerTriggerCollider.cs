@@ -6,10 +6,20 @@ public class PlayerTriggerCollider : MonoBehaviour
 {
     public string triggerID;
     public bool activateOnce;
-    private bool activated;
+    public bool activated;
+
+    void Awake()
+    {
+        GameManager.one.RegisterTrigger(this);
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && !activated)
+        if (activateOnce && activated)
+        {
+            return;
+        }
+        if (other.tag == "Player")
         {
             GameManager.one.ActivateTrigger(triggerID);
             if (activateOnce)

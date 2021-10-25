@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,18 +24,27 @@ public class GameManager : MonoBehaviour
     public GameObject milkItem;
     public GameObject listButton;
     public GameObject pauseButton;
+    public Text timerText;
     public GameObject tutorialScreen;
+    public GameObject errorLoading;
     public GameObject listScreen;
     public GameObject[] listCross;
+    public GameObject pauseScreen;
 
     public Transform exitStart;
 
     private float tutTimer = 5f;
+    private Dictionary<string, PlayerTriggerCollider> triggers = new Dictionary<string, PlayerTriggerCollider>();
 
     // Save Variables
     private bool fakeWallDown = false;
     private bool listFound = false;
     private bool[] itemFound = new bool[5];
+    ///
+
+    private bool loadingSave = true;
+    private float saveTimer = 30f;
+    private float speedRunTimer = 0f;
 
     void Awake()
     {
@@ -45,6 +55,77 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+        LoadSave();
+    }
+
+    public void LoadSave()
+    {
+        string saveData = SaveManager.saveToLoad;
+
+        if (saveData == "")
+        {
+            loadingSave = false;
+            return;
+        }
+
+        try
+        {
+            string[] sData = saveData.Split('\n');
+            float px = float.Parse(sData[0]);
+            float py = float.Parse(sData[1]);
+            player.transform.position = new Vector3(px, py, 0f);
+            speedRunTimer = float.Parse(sData[2]);
+            if (bool.Parse(sData[3]))
+            {
+                ActivateTrigger("opening");
+            }
+            if (bool.Parse(sData[4]))
+            {
+                ActivateTrigger("list");
+            }
+            if (bool.Parse(sData[5]))
+            {
+                ActivateTrigger("bread");
+            }
+            if (bool.Parse(sData[6]))
+            {
+                ActivateTrigger("bologna");
+            }
+            if (bool.Parse(sData[7]))
+            {
+                ActivateTrigger("mayo");
+            }
+            if (bool.Parse(sData[8]))
+            {
+                ActivateTrigger("eggs");
+            }
+            if (bool.Parse(sData[9]))
+            {
+                ActivateTrigger("milk");
+            }
+        }
+        catch
+        {
+            errorLoading.SetActive(true);
+        }
+
+        loadingSave = false;
+    }
+
+    public void SaveGame()
+    {
+        string saveData = "";
+        saveData += player.transform.position.x + "\n";
+        saveData += player.transform.position.y + "\n";
+        saveData += speedRunTimer + "\n";
+        saveData += fakeWallDown + "\n";
+        saveData += listFound + "\n";
+        saveData += itemFound[0] + "\n";
+        saveData += itemFound[1] + "\n";
+        saveData += itemFound[2] + "\n";
+        saveData += itemFound[3] + "\n";
+        saveData += itemFound[4] + "\n";
+        PlayerPrefs.SetString("SaveData" + SaveManager.saveSlot, saveData);
     }
 
     public Vector2 GetTileDirection(Vector2 collPos)
@@ -101,11 +182,13 @@ public class GameManager : MonoBehaviour
 
     public void RegisterTrigger(PlayerTriggerCollider trigger)
     {
-
+        triggers.Add(trigger.triggerID, trigger);
     }
 
     public void ActivateTrigger(string id)
     {
+        triggers[id].activated = true;
+
         switch (id)
         {
             case "opening":
@@ -163,6 +246,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenList(bool open)
     {
+        if (loadingSave) return;
         listScreen.SetActive(open);
         listButton.SetActive(!open);
         PauseGame(open);
@@ -176,6 +260,7 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame(bool pause)
     {
+        if (!listScreen.activeInHierarchy) pauseScreen.SetActive(pause);
         playing = !pause;
         pauseButton.SetActive(!pause);
         Time.timeScale = pause ? 0f : 1f;
@@ -183,7 +268,20 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        print("end game :D");
+        if (PlayerPrefs.GetFloat("BestTime", Mathf.Infinity) > speedRunTimer)
+        {
+            PlayerPrefs.SetFloat("BestTime", speedRunTimer);
+        }
+        PlayerPrefs.SetString("Times", PlayerPrefs.GetString("Times") + speedRunTimer + "\n");
+        SaveManager.wonGame = true;
+        PlayerPrefs.SetString("SaveData" + SaveManager.saveSlot, "");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+    }
+
+    public void SaveQuit()
+    {
+        SaveGame();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
 
     // Update is called once per frame
@@ -197,5 +295,30 @@ public class GameManager : MonoBehaviour
                 tutorialScreen.SetActive(false);
             }
         }
+        if (saveTimer > 0f)
+        {
+            saveTimer -= Time.deltaTime;
+            if (saveTimer <= 0f)
+            {
+                saveTimer = 30f;
+                SaveGame();
+            }
+        }
+        if (playing)
+        {
+            speedRunTimer += Time.deltaTime;
+            timerText.text = TimeString(speedRunTimer);
+        }
+    }
+
+    private string TimeString(float time)
+    {
+        int hours = Mathf.FloorToInt(time / 3600);
+        int minutes = Mathf.FloorToInt(time / 60) - (hours * 60);
+        float seconds = time - (minutes * 60) - (hours * 3600);
+        if (hours > 0)
+            return $"{hours:00}:{minutes:00}:{seconds:00.00}";
+        else
+            return $"{minutes:00}:{seconds:00.00}";
     }
 }
