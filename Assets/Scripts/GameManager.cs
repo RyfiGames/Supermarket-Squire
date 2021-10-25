@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public bool playing = true;
 
+    public PlayerController player;
     public Tilemap speedTiles;
     public TileBase[] speedTileBase;
     public PercentageBar creamBar;
@@ -22,8 +23,13 @@ public class GameManager : MonoBehaviour
     public GameObject milkItem;
     public GameObject listButton;
     public GameObject pauseButton;
+    public GameObject tutorialScreen;
     public GameObject listScreen;
     public GameObject[] listCross;
+
+    public Transform exitStart;
+
+    private float tutTimer = 5f;
 
     // Save Variables
     private bool fakeWallDown = false;
@@ -93,6 +99,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RegisterTrigger(PlayerTriggerCollider trigger)
+    {
+
+    }
+
     public void ActivateTrigger(string id)
     {
         switch (id)
@@ -136,6 +147,17 @@ public class GameManager : MonoBehaviour
                 OpenList(true);
                 RotateSpeedTiles(new Vector2(56, 181), new Vector2(66, 231));
                 break;
+            case "exit":
+                if (itemFound[0] && itemFound[1] && itemFound[2] && itemFound[3] && itemFound[4])
+                {
+                    EndGame();
+                }
+                else
+                {
+                    OpenList(true);
+                    player.transform.position = exitStart.position;
+                }
+                break;
         }
     }
 
@@ -159,9 +181,21 @@ public class GameManager : MonoBehaviour
         Time.timeScale = pause ? 0f : 1f;
     }
 
+    public void EndGame()
+    {
+        print("end game :D");
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        if (tutTimer > 0f)
+        {
+            tutTimer -= Time.deltaTime;
+            if (tutTimer <= 0f)
+            {
+                tutorialScreen.SetActive(false);
+            }
+        }
     }
 }
