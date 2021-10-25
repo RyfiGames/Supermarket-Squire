@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     ///
 
     private bool loadingSave = true;
-    private float saveTimer = 30f;
+    private float saveTimer = 10f;
     private float speedRunTimer = 0f;
 
     void Awake()
@@ -246,7 +246,11 @@ public class GameManager : MonoBehaviour
 
     public void OpenList(bool open)
     {
-        if (loadingSave) return;
+        if (loadingSave)
+        {
+            listButton.SetActive(true);
+            return;
+        }
         listScreen.SetActive(open);
         listButton.SetActive(!open);
         PauseGame(open);
@@ -300,7 +304,7 @@ public class GameManager : MonoBehaviour
             saveTimer -= Time.deltaTime;
             if (saveTimer <= 0f)
             {
-                saveTimer = 30f;
+                saveTimer = 10f;
                 SaveGame();
             }
         }

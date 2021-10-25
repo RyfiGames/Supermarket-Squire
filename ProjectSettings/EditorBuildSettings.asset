@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Ryfi Games Splash/Ryfi Games Splash.unity
+    guid: cea9ad2ccd25a4753bd833d9634c9268
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 904ccc4a06f9d0749ab89ca576d9bf29
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

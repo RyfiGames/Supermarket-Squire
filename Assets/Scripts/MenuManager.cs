@@ -20,11 +20,30 @@ public class MenuManager : MonoBehaviour
     public Image slot2Image;
     public Image slot3Image;
 
+    public Transform scoreParent;
+    public GameObject scorePF;
+
+    private static AudioSource music = null;
+
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1f;
+
+        if (!music)
+        {
+            AudioSource mas = AudioManager.one.PlaySound("SpaceJazz", "music");
+            mas.loop = true;
+            music = mas;
+        }
+
         LoadSaveSlots();
+
+        if (SaveManager.wonGame)
+        {
+            ShowScreen("scores");
+        }
+
     }
 
     private void LoadSaveSlots()
@@ -101,7 +120,23 @@ public class MenuManager : MonoBehaviour
 
     private void LoadMyScores()
     {
-
+        for (int i = 0; i < scoreParent.childCount; i++)
+        {
+            Destroy(scoreParent.GetChild(i));
+        }
+        string scores = PlayerPrefs.GetString("Times");
+        string[] sScores = scores.Split('\n');
+        if (PlayerPrefs.GetFloat("BestTime", Mathf.Infinity) != Mathf.Infinity)
+        {
+            GameObject best = Instantiate(scorePF, scoreParent);
+            best.transform.GetChild(0).GetComponent<Text>().text = "Best Time: " + TimeString(PlayerPrefs.GetFloat("BestTime"));
+        }
+        foreach (string score in sScores)
+        {
+            if (score == "") continue;
+            GameObject go = Instantiate(scorePF, scoreParent);
+            go.transform.GetChild(0).GetComponent<Text>().text = TimeString(float.Parse(score));
+        }
     }
     private void LoadGlobalScores()
     {
