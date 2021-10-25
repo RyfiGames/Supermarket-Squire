@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         one = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public AudioSource PlaySound(string sName, string soundGroup = "master", bool random = false, float volumePercent = 1f)

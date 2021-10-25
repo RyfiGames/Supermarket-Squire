@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour
     private Camera cam;
     private Rigidbody2D rb;
 
+    private float creamSFXTimer = 0f;
+    private AudioSource cartSFX;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +53,13 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(-pointerDir * speed * Time.deltaTime);
             whippedCream -= Time.deltaTime;
             GameManager.one.creamBar.setPercent(whippedCream / 3f);
+
+            if (creamSFXTimer <= 0f)
+            {
+                creamSFXTimer += 0.3f;
+                AudioManager.one.PlaySound("creamSFX", "sfx");
+            }
+
         }
         if (rb.velocity.magnitude < 0.5f && whippedCream < 3f)
         {
@@ -59,6 +69,21 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.magnitude > 30f)
         {
             rb.velocity = rb.velocity.normalized * 25f;
+        }
+
+        if (rb.velocity.magnitude > 1f)
+        {
+            if (!cartSFX)
+            {
+                cartSFX = AudioManager.one.PlaySound("cartSFX", "sfx", true);
+            }
+        }
+        else
+        {
+            if (cartSFX)
+            {
+                cartSFX.Stop();
+            }
         }
     }
 
@@ -97,5 +122,10 @@ public class PlayerController : MonoBehaviour
     {
         if (GameManager.one.playing)
             move();
+
+        if (creamSFXTimer > 0f)
+        {
+            creamSFXTimer -= Time.deltaTime;
+        }
     }
 }
