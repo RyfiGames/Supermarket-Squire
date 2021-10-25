@@ -122,7 +122,7 @@ public class MenuManager : MonoBehaviour
     {
         for (int i = 0; i < scoreParent.childCount; i++)
         {
-            Destroy(scoreParent.GetChild(i));
+            Destroy(scoreParent.GetChild(i).gameObject);
         }
         string scores = PlayerPrefs.GetString("Times");
         string[] sScores = scores.Split('\n');
