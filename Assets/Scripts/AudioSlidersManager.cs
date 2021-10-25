@@ -14,12 +14,20 @@ public class AudioSlidersManager : MonoBehaviour
         sliders[0].value = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
         sliders[1].value = PlayerPrefs.GetFloat("SFXVolume", 0.3f);
         sliders[2].value = PlayerPrefs.GetFloat("VoiceVolume", 0.8f);
+        MusicUpdate(sliders[0].value);
+        SFXUpdate(sliders[1].value);
+        VoiceUpdate(sliders[2].value);
     }
 
     public void MusicUpdate(float value)
     {
         PlayerPrefs.SetFloat("MusicVolume", value);
         AudioManager.one.SetVolume("music", value);
+
+        if (MenuManager.music)
+        {
+            MenuManager.music.volume = value;
+        }
     }
     public void SFXUpdate(float value)
     {

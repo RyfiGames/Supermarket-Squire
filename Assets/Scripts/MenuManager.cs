@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
     public Transform scoreParent;
     public GameObject scorePF;
 
-    private static AudioSource music = null;
+    public static AudioSource music = null;
 
     // Start is called before the first frame update
     void Start()
