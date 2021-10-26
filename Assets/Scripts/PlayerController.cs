@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
         if (rb.velocity.magnitude < 0.5f && whippedCream < 3f)
         {
             whippedCream += Time.deltaTime * 5f;
+            whippedCream = Mathf.Clamp(whippedCream, 0f, 3f);
             GameManager.one.creamBar.setPercent(whippedCream / 3f);
         }
         if (rb.velocity.magnitude > 30f)

@@ -47,12 +47,12 @@ public class ExpanderController : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
             if (circle.localScale.x > 0.1f)
             {
-                circle.localScale -= Vector3.one * Time.deltaTime * expandSpeed;
+                circle.localScale = Vector3.zero;
             }
         }
         if (triggered && circle.localScale.x < 1f)
         {
-            circle.localScale += Vector3.one * Time.deltaTime * expandSpeed;
+            circle.localScale += Vector3.one;
         }
     }
 }
